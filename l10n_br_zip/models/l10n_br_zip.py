@@ -168,7 +168,7 @@ class L10nBrZip(models.Model):
 
         # One ZIP was found
         if len(zips) == 1:
-            obj.write(zips[0].set_result())
+            obj.sudo().write(zips[0].set_result())
             return True
 
         # More than one ZIP was found
@@ -184,7 +184,7 @@ class L10nBrZip(models.Model):
             if cep_values:
                 # Create zip object
                 z = self.create(cep_values)
-                obj.write(z.set_result())
+                obj.sudo().write(z.set_result())
                 return True
 
     def create_wizard(self, obj, zips):
@@ -225,5 +225,5 @@ class L10nBrZip(models.Model):
         object_name = self._context.get("object_name")
         if address_id and object_name:
             obj = self.env[object_name].browse(address_id)
-            obj.write(self.set_result())
+            obj.sudo().write(self.set_result())
         return True
